@@ -1,130 +1,137 @@
 'use client'
 
-import { Tabs, type TabsRef } from 'flowbite-react'
+import { Tabs } from 'flowbite-react'
 import Loading from '@/components/Loading/Loading'
 import InfoTable from '@/components/Table/InfoTable'
-import React, { useState, useRef, useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import { SiLeetcode, SiCodeforces } from 'react-icons/si'
-
 import styles from './page.module.css'
 
 const LEADERBOARD_REVALIDATION_TIME = 60
 
-const Page = async () => {
-  const [activeTab, setActiveTab] = useState<number>(0)
-  const [arrLt, setArrlt] = useState<string[][]>([[]])
-  const [arrCf, setArrCf] = useState<string[][]>([[]])
-  const tabsRef = useRef<TabsRef>(null)
-  const props = { setActiveTab, tabsRef }
+const Page = () => {
+  const [activeTab, setActiveTab] = useState(0)
+  const [leetcodeData, setLeetcodeData] = useState<string[][]>([])
+  const [codeforcesData, setCodeforcesData] = useState<string[][]>([])
+  const [loading, setLoading] = useState(true)
+
+  const fetchLeetcodeData = async () => {
+    try {
+      const res = await fetch('/api/fetch/leetcode')
+      if (!res.ok) throw new Error('Failed to fetch Leetcode data')
+      
+      const data = await res.json()
+      const users = JSON.parse(data.leetcode)
+      const formattedData = users.map((user: any) => [
+        user.rollNumber,
+        user.name,
+        user.userHandle,
+        user.ranking.toString(),
+        user.stars.toString()
+      ])
+      setLeetcodeData(formattedData)
+    } catch (error) {
+      console.error('Leetcode fetch error:', error)
+      setLeetcodeData([])
+    }
+  }
+
+  const fetchCodeforcesData = async () => {
+    try {
+      const res = await fetch('/api/fetch/codeforces')
+      if (!res.ok) throw new Error('Failed to fetch Codeforces data')
+      
+      const data = await res.json()
+      const users = JSON.parse(data.codeforces)
+      const formattedData = users.map((user: any) => [
+        user.rollNumber,
+        user.name,
+        user.userHandle,
+        user.rating.toString(),
+        user.contests.toString(),
+        user.last_contest_id.toString()
+      ])
+      setCodeforcesData(formattedData)
+    } catch (error) {
+      console.error('Codeforces fetch error:', error)
+      setCodeforcesData([])
+    }
+  }
 
   useEffect(() => {
-    console.log('Leetocde Fetch')
     const fetchData = async () => {
-      const res = await fetch(`/api/fetch/leetcode`, {
-        next: { revalidate: LEADERBOARD_REVALIDATION_TIME },
-        method: 'GET',
-      })
-      if (res.status !== 200) {
-        console.log('Leetocde Fetch NO RESPONSE')
-        setArrlt([[]])
-      }
-      console.log('Leetcode Fetch WITH RESPONSE')
-      const data = await res.json()
-      const dict_data: object[] = JSON.parse(data.leetcode)
-
-      const arr: string[][] = []
-      dict_data.forEach(element => {
-        arr.push(Object.values(element).map(e => e.toString()))
-      })
-      setArrlt(arr)
+      setLoading(true)
+      await Promise.all([
+        fetchLeetcodeData(),
+        fetchCodeforcesData()
+      ])
+      setLoading(false)
     }
+
     fetchData()
+    const interval = setInterval(fetchData, LEADERBOARD_REVALIDATION_TIME * 1000)
+    return () => clearInterval(interval)
   }, [])
 
-  useEffect(() => {
-    console.log('Codeforce Fetch')
-    const fetchData = async () => {
-      const res = await fetch(`/api/fetch/codeforces`, {
-        next: { revalidate: LEADERBOARD_REVALIDATION_TIME },
-        method: 'GET',
-      })
-      if (res.status === 400) {
-        console.log('Codeforce Fetch NO RESPONCE')
-        setArrCf([[]])
-      }
-      console.log('Codeforce Fetch WITH RESPONCE')
-      const data = await res.json()
-      const dict_data: object[] = JSON.parse(data.codeforces)
-
-      const arr: string[][] = []
-      dict_data.forEach(element => {
-        arr.push(Object.values(element).map(e => e.toString()))
-      })
-      setArrCf(arr)
-    }
-    fetchData()
-  }, [])
-
-  const headings_lt: string[] = [
-    'rollNumber',
-    'fullName',
-    'userHandle',
+  const leetcodeHeadings = [
+    'Roll Number',
+    'Name',
+    'Handle',
     'Ranking',
-    'Stars',
+    'Stars'
   ]
 
-  // fetchLeetcodeUsersByAPI()
-  const headings_cf: string[] = [
-    'rollNumber',
-    'fullName',
-    'userHandle',
+  const codeforcesHeadings = [
+    'Roll Number',
+    'Name',
+    'Handle',
     'Rating',
     'Contests',
-    'Last Contest',
+    'Last Contest'
   ]
 
   return (
-    <>
-      <div className={styles.LeaderboardWrapper}>
-        <Tabs.Group
-          aria-label='Default tabs'
-          style='default'
-          ref={props.tabsRef}
-          className='bg-transparent px-4 pt-2 sm:pt-6'
-          onActiveTabChange={tab => props.setActiveTab(tab)}
+    <div className={styles.LeaderboardWrapper}>
+      <Tabs.Group
+        aria-label='Default tabs'
+        style='default'
+        className='bg-transparent px-4 pt-2 sm:pt-6'
+        onActiveTabChange={setActiveTab} // Set active tab here
+      >
+        <Tabs.Item
+          active={activeTab === 0}
+          title='LeetCode'
+          icon={SiLeetcode}
+          className='active:border-gray-500'
         >
-          <Tabs.Item
-            active
-            title='LeetCode'
-            icon={SiLeetcode}
-            className='active:border-gray-500'
-          >
-            {arrLt ? (
-              <InfoTable
-                headings={headings_lt}
-                row_data={arrLt}
-                table_heading='Leetcode'
-                setRowData={null}
-              />
-            ) : (
-              <Loading />
-            )}
-          </Tabs.Item>
-          <Tabs.Item title='Codeforces' icon={SiCodeforces}>
-            {arrCf ? (
-              <InfoTable
-                headings={headings_cf}
-                row_data={arrCf}
-                table_heading='Codeforces'
-                setRowData={null}
-              />
-            ) : (
-              <Loading />
-            )}
-          </Tabs.Item>
-        </Tabs.Group>
-      </div>
-    </>
+          {loading ? (
+            <Loading />
+          ) : (
+            <InfoTable
+              headings={leetcodeHeadings} // Use leetcodeHeadings
+              row_data={leetcodeData} // Use leetcodeData
+              table_heading='Leetcode'
+              setRowData={null}
+            />
+          )}
+        </Tabs.Item>
+        <Tabs.Item
+          title='Codeforces'
+          icon={SiCodeforces}
+        >
+          {loading ? (
+            <Loading />
+          ) : (
+            <InfoTable
+              headings={codeforcesHeadings} // Use codeforcesHeadings
+              row_data={codeforcesData} // Use codeforcesData
+              table_heading='Codeforces'
+              setRowData={null}
+            />
+          )}
+        </Tabs.Item>
+      </Tabs.Group>
+    </div>
   )
 }
 

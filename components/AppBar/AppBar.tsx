@@ -54,35 +54,26 @@ export default function AppBar() {
                   <div>Home</div>
                 </Link>
               </div>
-              {
-                <div className={styles.option}>
-                  <Link href='/events' scroll={false}>
-                    <div>Events</div>
-                  </Link>
-                </div>
-              }
-              {/* <div className={styles.option}>
-                <Link href='/projects' scroll={false}>
-                  <div>Projects</div>
+              <div className={styles.option}>
+                <Link href='/events' scroll={false}>
+                  <div>Events</div>
                 </Link>
-              </div> */}
-              {<div className={styles.option}>
+              </div>
+              <div className={styles.option}>
                 <Link href='/members' scroll={false}>
                   <div>Members</div>
                 </Link>
-              </div>}
-              {/* <div className={styles.option}>
-                <Link href='/sponsors' scroll={false}>
-                  <div>Sponsors</div>
+              </div>
+              <div className={styles.option}>
+                <Link href='/members/wanna_join' scroll={false}>
+                  <div>Membership</div>
                 </Link>
-              </div> */}
-              {
-                <div className={styles.option}>
-                  <Link href='/members/wanna_join' scroll={false}>
-                    <div>Membership</div>
-                  </Link>
-                </div>
-              }
+              </div>
+              <div className={styles.option}>
+                <Link href='/leaderboard' scroll={false}>
+                  <div>Leaderboard</div>
+                </Link>
+              </div>
             </div>
             <div className={styles.hamBurgerWrapper}>
               <div
