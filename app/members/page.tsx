@@ -8,6 +8,7 @@ import styles from './page.module.css'
 import { FOSS } from '@/types/Members/foss.types'
 import { CP } from '@/types/Members/cp.types'
 import { GD } from '@/types/Members/gd.types'
+import { WebDev } from '@/types/Members/webdev.types'
 import { members } from '@/types/Members/members.types'
 import { SiBmcsoftware, SiCodeforces } from 'react-icons/si'
 import { MdWeb } from "react-icons/md";
@@ -23,6 +24,7 @@ const Page = () => {
   const [cpArr, setCpArr] = useState<string[][]>([[]])
   const [gdArr, setGdArr] = useState<string[][]>([[]])
   const [fossArr, SetFossArr] = useState<string[][]>([[]])
+  const [webArr, SetWebArr] = useState<string[][]>([[]])
   const [activeTab, setActiveTab] = useState<number>(0)
   const tabsRef = useRef<TabsRef>(null)
   const props = { setActiveTab, tabsRef }
@@ -150,11 +152,41 @@ const Page = () => {
     }
     fetchData()
   }, [])
+  useEffect(() => {
+    const fetchData = async () => {
+      const res = await fetch(`/api/fetch/webdevmembers`, {
+        next: {
+          revalidate: MEMBERS_REVALIDATION_TIME,
+        },
+        method: 'GET',
+      })
+      if (res.status !== 200) {
+        SetWebArr([[]])
+      }
+      const data = await res.json()
+      const dict_data: WebDev[] = JSON.parse(data.webdev)
+      const arr: string[][] = []
+      dict_data.forEach(element => {
+        let new_ele = {
+          name: '',
+          roll_number: 0,
+          github_uname: '',
+        }
+        new_ele['name'] = element.member.name
+        new_ele['roll_number'] = element.member.roll_number
+        new_ele['github_uname'] = element.github_uname
+        arr.push(Object.values(new_ele).map(e => e.toString()))
+      })
+      SetWebArr(arr)
+    }
+    fetchData()
+  }, [])
 
   const headings_mem: string[] = ['Name', 'Roll Number', 'Wing']
   const headings_foss: string[] = ['Name', 'Roll Number', 'GitHub ID']
   const headings_cp: string[] = ['Name', 'Roll Number', 'handle']
   const headings_gd: string[] = ['Name', 'Roll Number', 'Role']
+  const headings_webdev: string[] = ['Name', 'Roll Number', 'GitHub ID']
 
   return (
     <>
@@ -192,10 +224,10 @@ const Page = () => {
             )}
           </Tabs.Item>
           <Tabs.Item title='Web Development' icon={MdWeb}>
-            {fossArr ? (
+            {webArr ? (
               <InfoTable
-                headings={headings_foss}
-                row_data={fossArr}
+                headings={headings_webdev}
+                row_data={webArr}
                 table_heading='Web Development'
                 setRowData={null}
               />
