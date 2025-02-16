@@ -58,7 +58,7 @@ const CTA = () => {
                     includes submitting code changes, bug fixes, or other
                     valuable contributions to open-source projects.
                   </li>
-                  <li>
+                  {/* <li>
                     <span className='font-semibold'>Shortlisting: </span>
                     Submissions by applicants will be reviewed, and shortlisted
                     candidates will be selected for the next stage. Shortlisting
@@ -66,22 +66,17 @@ const CTA = () => {
                     experience, and open-source contributions. Exceptional
                     contributors from the open-to-all tasks may receive
                     invitations to join the club.
-                  </li>
+                  </li> */}
                   <li>
                     <span className='font-semibold'>Selection: </span>
-                    Successful candidates, based on their interview performance
+                    Successful candidates, based on their performance in the tasks
                     and overall qualifications, will be offered membership in
                     the Coding Club.
                   </li>
-                  <br />
-
-                  <p className='text-white'>
-                    Please note that the specific tasks, projects, and club
-                    membership criteria may be subject to change or elaboration
-                    by the FOSS Wing Lead or the club's Secretary. Interested
-                    individuals should contact the club for the most up-to-date
-                    information on the application process and club guidelines.
-                  </p>
+                  <li>
+                    The list of open-to-all tasks can be viewed publicly on our Github page: <a href="https://github.com/users/codingclub-iitdh/projects/1" className="text-blue-500">@codingclub-iitdh's Tasks List</a>
+                  </li>
+                  <br/>
                 </ul>
 
                 <li>Competitive Programming</li>
@@ -286,9 +281,19 @@ const CTA = () => {
                 </ul>
               </ol>
             </div>
+
+            <p className='mt-5 font-light sm:text-xl text-gray-400'>
+              Please note that the specific tasks, projects, and club
+              membership criteria may be subject to change or elaboration
+              by the Wing Leads or the Club Secretaries. Interested
+              individuals should contact the club if they have any doubts
+              in the application process and club guidelines.
+            </p>
+
+
             <div className='flex flex-col mt-8 space-y-4 sm:flex-row sm:space-y-0 sm:space-x-4'>
               <Link
-                href='https://docs.google.com/document/d/1jRucEzPliQFMyHNJ87l-4Q3br8EcPv0_HPgkKTX51Vo/'
+                href='/faq'
                 target='_top'
                 className='inline-flex items-center justify-center px-4 py-2.5 text-base font-medium text-center border rounded-lg focus:ring-4 text-white border-gray-600 hover:bg-gray-700 focus:ring-gray-600'
               >

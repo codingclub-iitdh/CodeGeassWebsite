@@ -1,0 +1,7 @@
+.membersWrapper {
+  padding-top: 6rem;
+  background-color: var(--primary-light-pastel-gray);
+  background-image: url(/Events/micro_carbon.png);
+  padding-bottom: 3rem;
+  min-height: 100vh;
+}

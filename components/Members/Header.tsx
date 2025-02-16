@@ -21,7 +21,7 @@ const Header = () => {
                 target='_top'
                 className='inline-flex items-center justify-center px-4 py-2.5 text-base font-medium text-center border rounded-lg focus:ring-4 text-white border-gray-600 hover:bg-gray-700 focus:ring-gray-600'
               >
-                Enrollement Policy
+                Enrollment Policy
               </Link>
             </div>
           </div>
