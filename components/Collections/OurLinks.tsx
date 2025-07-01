@@ -11,7 +11,7 @@ const OurLinks = () => {
               Useful Links
             </h2>
             <p className='mb-2 font-light sm:text-xl text-gray-400'>
-            This is a collection of links for the Coding Club at IIT Dharwad. 
+            This is a collection of links for the Coding Club at IIT Dharwad.
             Here, you can find essential resources and information to stay connected and engaged with the club:
             </p>
             <div>
@@ -23,7 +23,7 @@ const OurLinks = () => {
                   <span className='font-semibold'>Website:</span> <Link className="text-blue-500" href="https://codingclub.iitdh.ac.in">https://codingclub.iitdh.ac.in</Link>
                 </li>
                 <li>
-                  <span className='font-semibold'>Instagram:</span> <Link className="text-blue-500" href="https://instagram.com/coding_clubiitdh">https://instagram.com/coding_clubiitdh</Link>
+                  <span className='font-semibold'>Instagram:</span> <Link className="text-blue-500" href="https://instagram.com/coding_club_iitdh">https://instagram.com/coding_club_iitdh</Link>
                 </li>
                 <li>
                   <span className='font-semibold'>LinkedIn:</span> <Link className="text-blue-500" href="https://www.linkedin.com/company/coding-club-iit-dharwad">https://www.linkedin.com/company/coding-club-iit-dharwad</Link>
