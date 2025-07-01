@@ -66,85 +66,14 @@ const Registration: NextPage<Props> = ({}) => {
 
   const handleOpen = (data: any) => {
     setFormdata(data)
-    setOpen(true)
+    registerIn(data, setAuthState)
+    if (authState.error === null) {
+      router.push('/leaderboard')
+    }
   }
-  const handleClose = () => {
-    setOpen(false)
-  }
-  // const handleResendOTP = () => {
-  //   const data = {
-  //     name: formdata.fullName,
-  //     email: `${formdata.rollNumber}@iitdh.ac.in`,
-  //     userHandle: formdata.userHandle,
-  //   }
-
-  //   axios
-  //     .post('/api/email/sendEmail', data)
-  //     .then(response => {
-  //       // Handle the successful response from the server
-  //       console.log('Server Response:', response.data)
-  //     })
-  //     .catch(error => {
-  //       // Handle any errors that occurred during the request
-  //       console.error('Error:', error)
-  //     })
-  // }
-
-  const handleSubmitOTP = () => {
-    axios
-      .post('/api/email/verifyOtp', {
-        email: formdata.rollNumber + '@iitdh.ac.in',
-        userOtp: otp,
-      })
-      .then(res => {
-        console.log(res)
-        registerIn(formdata, setAuthState)
-        if (authState.error === null) {
-          router.push('/leaderboard')
-        }
-      })
-      .catch(err => {
-        console.log(err)
-      })
-  }
-
-  const [open, setOpen] = useState(false)
-  const [otp, setOtp] = useState('')
 
   return (
     <>
-      <Modal
-        isOpen={open}
-        onRequestClose={handleClose}
-        shouldCloseOnOverlayClick={true}
-        className={styles.customModal}
-      >
-        <div className='modal-content grid grid-col-1 gap-2'>
-          <button
-            className='close-icon w-max justify-self-end text-2xl'
-            onClick={handleClose}
-          >
-            &times;
-          </button>
-          <h2 className='text-left justify-self-center mt-10'>Enter OTP</h2>
-          <input
-            className='bg-black c-white text-left mx-3 rounded w-fit justify-self-center'
-            type='text'
-            placeholder='Enter OTP'
-            value={otp}
-            onChange={e => setOtp(e.target.value)}
-            maxLength={4}
-          />
-          <button
-            className='bg-gray-800 hover:bg-gray-500 text-white font-bold py-2 px-4 rounded justify-self-center w-fit mt-24 mb-5'
-            onClick={handleSubmitOTP}
-          >
-            Submit
-          </button>
-          {/* <button onClick={handleResendOTP}>Resend OTP</button> */}
-        </div>
-      </Modal>
-
       <div
         className={`${styles.RegWrapper} grid gap-0 grid-cols-1 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-1 xl:grid-cols-1`}
       >

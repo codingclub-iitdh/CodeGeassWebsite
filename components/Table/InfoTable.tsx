@@ -40,6 +40,7 @@ const InfoTable = ({
                   {row_data.map((row, index) => {
                     return (
                       <IndividualCol
+                        key={index}
                         data_items={row}
                         index_row={index}
                         userType={userType}

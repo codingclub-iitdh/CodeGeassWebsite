@@ -8,7 +8,7 @@ const Heading = ({ headings }: Props) => {
       <tr key={'HEADING'}>
         {headings.map(heading => {
           return (
-            <th scope='col' className='px-6 py-3 md:px-10'>
+            <th scope='col' className='px-6 py-3 md:px-10' key={heading}>
               {heading}
             </th>
           )

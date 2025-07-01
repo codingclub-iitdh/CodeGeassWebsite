@@ -1,27 +1,74 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with
-[`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# CodeGeassWebsite
+
+This is a [Next.js](https://nextjs.org/) project.
 
 ## Getting Started
 
-First, run the development server:
+To set up and run this project locally, follow these steps:
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-```
+### Prerequisites
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the
-result.
+Make sure you have one of the following installed:
 
-You can start editing the page by modifying `app/page.tsx`. The page
-auto-updates as you edit the file.
+*   [Node.js](https://nodejs.org/en/) (LTS version recommended)
+*   [Yarn](https://yarnpkg.com/)
+*   [PostgreSQL](https://www.postgresql.org/)
 
-This project uses
-[`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to
-automatically optimize and load Inter, a custom Google Font.
+### Installation
+
+1.  **Clone the repository (if you haven't already):**
+
+    ```bash
+    git clone <repository-url>
+    cd CodeGeassWebsite
+    ```
+
+2.  **Install dependencies:**
+
+    ```bash
+    npm install
+    # or
+    yarn install
+    # or
+    pnpm install
+    ```
+
+### Database Setup
+
+1.  **Create a `.env` file** in the root of the project based on `.env.example`. Add your PostgreSQL database URL. For example:
+
+    ```
+    DATABASE_URL="postgresql://user:password@localhost:5432/mydatabase"
+    ```
+    If you're using Docker for PostgreSQL, you can start a new instance with:
+
+    ```bash
+    docker run --name some-postgres -e POSTGRES_PASSWORD=yourpassword -p 5432:5432 -d dbname
+    ```
+    Then, your `DATABASE_URL` would be something like:
+    `postgresql://postgres:yourpassword@localhost:5432/dbname` (replace `dbname` with your desired database name if you create one).
+
+2.  **Run Prisma migrations** to set up your database schema:
+
+    ```bash
+    npx prisma migrate dev
+    ```
+
+### Running the Development Server
+
+1.  **Start the development server:**
+
+    ```bash
+    npm run dev
+    # or
+    yarn dev
+    # or
+    pnpm dev
+    ```
+
+2.  Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+
+    The pages auto-updates as you edit the files.
 
 ## Learn More
 

@@ -54,11 +54,18 @@ const Page = async () => {
       }
       console.log('Codeforce Fetch WITH RESPONCE')
       const data = await res.json()
-      const dict_data: object[] = JSON.parse(data.codeforces)
+      const dict_data: any[] = JSON.parse(data.codeforces)
 
       const arr: string[][] = []
       dict_data.forEach(element => {
-        arr.push(Object.values(element).map(e => e.toString()))
+        arr.push([
+          element.rollNumber.toString(),
+          element.name.toString(),
+          element.userHandle.toString(),
+          element.rating.toString(),
+          element.contests.toString(),
+          element.last_contest_id.toString(),
+        ])
       })
       setArrCf(arr)
     }
