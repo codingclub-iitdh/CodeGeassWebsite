@@ -2,6 +2,15 @@ import blocksData from '@/types/Block/blockCard.types'
 
 const data = [
   {
+    id: '14',
+    title: 'Sleepless Coding Saga 3.0',
+    start_month: 'October 25-26th 2024',
+    description:
+      "Presenting...Sleepless Coding Saga 3.0, the revival of a hackathon. An event designed to harness the creative talents of our students and community members to address real-world challenges. Join us on an exciting 36 hour journey to ideate, innovate and build software that impacts the world!",
+    url: 'https://sleepless-coding-saga-2.devfolio.co/',
+    image_url: '/Events/pics/scs2_2024.png',
+  },
+  {
     id: '13',
     title: 'DevSprint',
     start_month: 'January 18th, 2025',
@@ -130,3 +139,4 @@ const data = [
 ];
 
 export default data
+
