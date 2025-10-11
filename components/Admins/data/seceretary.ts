@@ -9,6 +9,14 @@ const sec_data: admin_data = [
     instagram: '',
     division: 'General Secretary Technical Affairs',
   },
+  { 
+    name: 'Nidhish Doshi',
+    img: '/adms/nidhish.png',
+    email: 'cs23bt009@iitdh.ac.in',
+    linkedIn: 'https://linkedin.com/in/nidhish-doshi-294b9b283',
+    instagram: 'https://instagram.com/nidhish_doshi',
+    division: 'Coding Club Secretary',
+  },
   {
     name: 'Amogh R',
     img: '/adms/amogh.jpg',
@@ -16,14 +24,6 @@ const sec_data: admin_data = [
     linkedIn: 'https://linkedin.com/in/amogh-r-i2t',
     instagram: '',
     division: 'Coding Club Secretary',
-  },
-  { 
-    name: 'Srihari Gonahal',
-    img: '/adms/srihari.jfif',
-    email: 'cs23bt077@iitdh.ac.in',
-    linkedIn: '',
-    instagram: '',
-    division: 'Coding Club Junior Secretary',
   },
 ]
 
