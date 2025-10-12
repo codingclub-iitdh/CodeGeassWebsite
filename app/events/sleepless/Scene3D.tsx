@@ -17,7 +17,7 @@ export function FloatingParticles({ count = 500, mousePosition }: { count?: numb
       const xFactor = -50 + Math.random() * 100
       const yFactor = -50 + Math.random() * 100
       const zFactor = -50 + Math.random() * 100
-      temp.push({ t, factor, speed, xFactor, yFactor, zFactor, mx: 0, my: 0 })
+      temp.push({ t, factor, speed, xFactor, yFactor, zFactor })
     }
     return temp
   }, [count])
@@ -32,13 +32,10 @@ export function FloatingParticles({ count = 500, mousePosition }: { count?: numb
       const b = Math.sin(t) + Math.cos(t * 2) / 10
       const s = Math.cos(t)
       
-      particle.mx += (mousePosition.x * 10 - particle.mx) * 0.01
-      particle.my += (mousePosition.y * 10 - particle.my) * 0.01
-      
       dummy.position.set(
-        (particle.mx / 10) * a + xFactor + Math.cos((t / 10) * factor) + (Math.sin(t * 1) * factor) / 10,
-        (particle.my / 10) * b + yFactor + Math.sin((t / 10) * factor) + (Math.cos(t * 2) * factor) / 10,
-        (particle.my / 10) * b + zFactor + Math.cos((t / 10) * factor) + (Math.sin(t * 3) * factor) / 10
+        xFactor + Math.cos((t / 10) * factor) + (Math.sin(t * 1) * factor) / 10,
+        yFactor + Math.sin((t / 10) * factor) + (Math.cos(t * 2) * factor) / 10,
+        zFactor + Math.cos((t / 10) * factor) + (Math.sin(t * 3) * factor) / 10
       )
       dummy.scale.set(s, s, s)
       dummy.rotation.set(s * 5, s * 5, s * 5)
@@ -70,31 +67,22 @@ export function CoffeeCup({ position, mousePosition, scrollY }: { position: [num
   
   useFrame((state) => {
     if (groupRef.current) {
-      // ULTRA responsive to mouse - cups track cursor aggressively
-      const mouseActivity = Math.sqrt(mousePosition.x ** 2 + mousePosition.y ** 2)
+      // Gentle floating animation
+      groupRef.current.rotation.y = Math.sin(state.clock.elapsedTime * 0.3) * 0.15
+      groupRef.current.rotation.x = Math.cos(state.clock.elapsedTime * 0.2) * 0.1
       
-      // Strong rotation following mouse
-      groupRef.current.rotation.y = mousePosition.x * 3 + Math.sin(state.clock.elapsedTime * 0.5) * 0.3
-      groupRef.current.rotation.x = mousePosition.y * 2 + Math.cos(state.clock.elapsedTime * 0.3) * 0.2
-      groupRef.current.rotation.z = (mousePosition.x - mousePosition.y) * 0.5
-      
-      // Dynamic position following cursor
-      groupRef.current.position.x = position[0] + mousePosition.x * 4
-      groupRef.current.position.y = position[1] + Math.sin(state.clock.elapsedTime * 0.3) * 0.5 + (scrollY * 0.005) + mousePosition.y * 2
-      groupRef.current.position.z = position[2] - scrollY * 0.008 + mouseActivity * 2
-      
-      // Dramatic scale changes with mouse distance
-      groupRef.current.scale.setScalar(1 + mouseActivity * 0.4)
+      // Subtle floating motion
+      groupRef.current.position.x = position[0]
+      groupRef.current.position.y = position[1] + Math.sin(state.clock.elapsedTime * 0.4) * 0.3 - (scrollY * 0.003)
+      groupRef.current.position.z = position[2] - scrollY * 0.005
     }
     
     if (steamRef.current) {
-      // Steam rises faster when mouse is active
-      const mouseActivity = Math.sqrt(mousePosition.x ** 2 + mousePosition.y ** 2)
+      // Steam rises smoothly
       steamRef.current.children.forEach((child, i) => {
-        const speed = 0.5 + mouseActivity * 1.5
-        child.position.y = ((state.clock.elapsedTime * speed + i * 0.5) % 3)
-        child.scale.setScalar((1 - (child.position.y / 3) * 0.8) * (1 + mouseActivity * 0.3))
-        child.position.x = Math.sin(state.clock.elapsedTime + i) * 0.3 * mouseActivity
+        child.position.y = ((state.clock.elapsedTime * 0.5 + i * 0.5) % 3)
+        child.scale.setScalar(1 - (child.position.y / 3) * 0.8)
+        child.position.x = Math.sin(state.clock.elapsedTime + i) * 0.2
       })
     }
   })
@@ -191,24 +179,22 @@ export function Laptop({ position, mousePosition, scrollY }: { position: [number
   
   useFrame((state) => {
     if (groupRef.current) {
-      // Strong mouse tracking
-      groupRef.current.rotation.y = mousePosition.x * 2 + Math.sin(state.clock.elapsedTime * 0.2) * 0.1
-      groupRef.current.rotation.z = mousePosition.y * 0.5
-      groupRef.current.position.y = position[1] + Math.cos(state.clock.elapsedTime * 0.3) * 0.3 - scrollY * 0.006
-      groupRef.current.position.x = position[0] + mousePosition.x * 3
+      // Gentle floating animation
+      groupRef.current.rotation.y = Math.sin(state.clock.elapsedTime * 0.2) * 0.15
+      groupRef.current.position.y = position[1] + Math.cos(state.clock.elapsedTime * 0.3) * 0.3 - scrollY * 0.004
+      groupRef.current.position.x = position[0]
     }
     
     if (screenRef.current) {
-      // Screen opens/closes based on mouse Y position
-      screenRef.current.rotation.x = -0.3 + Math.sin(state.clock.elapsedTime * 0.5) * 0.1 + mousePosition.y * 0.4
+      // Subtle screen animation
+      screenRef.current.rotation.x = -0.3 + Math.sin(state.clock.elapsedTime * 0.3) * 0.05
     }
     
     if (glowRef.current) {
-      // Screen glow pulses with mouse movement
-      const intensity = 0.6 + Math.abs(mousePosition.x) * 0.4 + Math.abs(mousePosition.y) * 0.4
+      // Gentle pulsing glow
+      const intensity = 0.6 + Math.sin(state.clock.elapsedTime * 0.8) * 0.2
       const mat = glowRef.current.material
       if (Array.isArray(mat)) {
-        // set opacity on each material if the property exists
         mat.forEach((m) => {
           if ('opacity' in m) {
             ;(m as THREE.Material & { opacity: number }).opacity = intensity
@@ -265,13 +251,12 @@ export function CodeBrackets({ mousePosition, scrollY }: { mousePosition: { x: n
   
   useFrame((state) => {
     if (group.current) {
-      // Strong rotation based on mouse position
-      group.current.rotation.x = mousePosition.y * 1.2 + scrollY * 0.0001
-      group.current.rotation.y = mousePosition.x * 1.2 + state.clock.elapsedTime * 0.05
-      group.current.rotation.z = (mousePosition.x + mousePosition.y) * 0.3
+      // Smooth rotation animation
+      group.current.rotation.x = scrollY * 0.0001
+      group.current.rotation.y = state.clock.elapsedTime * 0.1
       
-      // Expand/contract orbit based on scroll
-      const scale = 1 + scrollY * 0.0002
+      // Subtle scale based on scroll
+      const scale = 1 + Math.sin(state.clock.elapsedTime * 0.3) * 0.05
       group.current.scale.setScalar(scale)
     }
   })
@@ -362,16 +347,11 @@ export function BinaryRain({ scrollY, mousePosition }: { scrollY: number, mouseP
   
   useFrame((state) => {
     if (groupRef.current) {
-      // Rain falls faster when mouse is active
-      const mouseActivity = Math.sqrt(mousePosition.x ** 2 + mousePosition.y ** 2)
-      
+      // Smooth falling animation
       groupRef.current.children.forEach((child, i) => {
         const col = columns[i]
-        const speedMultiplier = 1 + mouseActivity * 2
-        child.position.y = ((state.clock.elapsedTime * col.speed * speedMultiplier + col.offset) % 40) - 20 - scrollY * 0.005
-        
-        // Shift columns sideways with mouse
-        child.position.x = col.x + mousePosition.x * 5
+        child.position.y = ((state.clock.elapsedTime * col.speed + col.offset) % 40) - 20 - scrollY * 0.003
+        child.position.x = col.x
       })
     }
   })
@@ -400,16 +380,11 @@ export function PizzaSlice({ position, mousePosition, scrollY }: { position: [nu
   
   useFrame((state) => {
     if (groupRef.current) {
-      // Faster rotation when mouse moves, slower when still
-      const mouseActivity = Math.abs(mousePosition.x) + Math.abs(mousePosition.y)
-      groupRef.current.rotation.y = state.clock.elapsedTime * (0.3 + mouseActivity * 0.5) + mousePosition.x * 1.5
-      groupRef.current.rotation.z = Math.sin(state.clock.elapsedTime * 0.5) * 0.2 + mousePosition.y * 0.8
-      groupRef.current.position.y = position[1] + Math.sin(state.clock.elapsedTime * 0.4) * 0.4 + scrollY * 0.004
-      groupRef.current.position.x = position[0] + mousePosition.x * 2
-      
-      // Scale with mouse distance
-      const distance = Math.sqrt(mousePosition.x ** 2 + mousePosition.y ** 2)
-      groupRef.current.scale.setScalar(1 + distance * 0.15)
+      // Gentle rotation and floating
+      groupRef.current.rotation.y = state.clock.elapsedTime * 0.3
+      groupRef.current.rotation.z = Math.sin(state.clock.elapsedTime * 0.5) * 0.1
+      groupRef.current.position.y = position[1] + Math.sin(state.clock.elapsedTime * 0.4) * 0.4 - scrollY * 0.003
+      groupRef.current.position.x = position[0]
     }
   })
   
@@ -464,15 +439,10 @@ export function EnergyDrink({ position, mousePosition, scrollY }: { position: [n
   
   useFrame((state) => {
     if (canRef.current) {
-      // Spin faster when mouse is active
-      const mouseActivity = Math.sqrt(mousePosition.x ** 2 + mousePosition.y ** 2)
-      canRef.current.rotation.y = state.clock.elapsedTime * (0.4 + mouseActivity * 1.5) + mousePosition.x * 2
-      canRef.current.rotation.x = mousePosition.y * 0.6
-      canRef.current.position.y = position[1] + Math.cos(state.clock.elapsedTime * 0.4) * 0.5 - scrollY * 0.007
-      canRef.current.position.z = position[2] + scrollY * 0.01
-      
-      // Tilt based on mouse
-      canRef.current.rotation.z = mousePosition.x * 0.3
+      // Gentle spinning and floating
+      canRef.current.rotation.y = state.clock.elapsedTime * 0.4
+      canRef.current.position.y = position[1] + Math.cos(state.clock.elapsedTime * 0.4) * 0.3 - scrollY * 0.004
+      canRef.current.position.z = position[2] - scrollY * 0.005
     }
   })
   

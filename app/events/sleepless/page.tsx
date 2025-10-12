@@ -27,7 +27,7 @@ export default function Sleepless() {
     setIsVisible(true)
     setTimeout(() => setBadgeAnimated(true), 500)
     
-    const targetDate = new Date('2025-10-25T00:00:00').getTime()
+    const targetDate = new Date('2025-10-25T09:00:00').getTime()
 
     const interval = setInterval(() => {
       const now = new Date().getTime()
