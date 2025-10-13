@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect, useRef, Suspense } from 'react'
+import { useState, useEffect, useRef, Suspense, useMemo } from 'react'
 import dynamic from 'next/dynamic'
 import styles from './page.module.css'
 
@@ -8,6 +8,8 @@ const ThreeBackground = dynamic(() => import('./ThreeBackground'), {
   ssr: false,
   loading: () => null
 })
+
+const FLOATING_SYMBOLS = ['{}', '[]', '<>', '()', '//', '==', '!=', '++']
 
 export default function Sleepless() {
   const [timeLeft, setTimeLeft] = useState({
@@ -22,6 +24,28 @@ export default function Sleepless() {
   const [isVisible, setIsVisible] = useState(false)
   const [badgeAnimated, setBadgeAnimated] = useState(false)
   const heroRef = useRef<HTMLElement>(null)
+
+  const particleConfigs = useMemo(
+    () =>
+      Array.from({ length: 15 }, (_, index) => ({
+        top: Math.random() * 100,
+        left: Math.random() * 100,
+        delay: index,
+        duration: 30 + Math.random() * 20
+      })),
+    []
+  )
+
+  const floatingSymbolConfigs = useMemo(
+    () =>
+      FLOATING_SYMBOLS.map((symbol, index) => ({
+        symbol,
+        left: 10 + index * 11,
+        delay: index * 3,
+        duration: 40 + Math.random() * 20
+      })),
+    []
+  )
 
   useEffect(() => {
     setIsVisible(true)
@@ -71,12 +95,12 @@ export default function Sleepless() {
 
   const handleApply = () => {
     // Registration link
-    window.open('https://sleepless-coding-saga-2.devfolio.co', '_blank')
+    window.open('https://sleepless-coding-saga-2-de03.devfolio.co/', '_blank')
   }
 
   const handleViewDetails = () => {
     // Replace with your Google Drive PDF link
-    window.open('YOUR_GOOGLE_DRIVE_PDF_LINK_HERE', '_blank')
+    window.open('https://drive.google.com/file/d/1Y6Fk_MkAACe_USUAdNEC_c4v-SEcrahC/view?usp=sharing', '_blank')
   }
 
   return (
@@ -135,10 +159,15 @@ export default function Sleepless() {
               <span>Hackathon</span>
             </div>
           </div>
-          <button className={`${styles.ctaButton} ${styles.pulseButton}`} onClick={handleApply}>
-            Register Now
-            <span className={styles.arrow}>→</span>
-          </button>
+          <div className={styles.buttonGroup}>
+            <button className={styles.ctaButton} onClick={handleApply}>
+              Register Now
+              <span className={styles.arrow}>→</span>
+            </button>
+            <button className={styles.viewDetailsButton} onClick={handleViewDetails}>
+              📄 View Details
+            </button>
+          </div>
         </div>
 
         {/* Countdown Timer */}
@@ -359,15 +388,15 @@ export default function Sleepless() {
 
       {/* Floating particles animation */}
       <div className={styles.particles}>
-        {[...Array(15)].map((_, i) => (
-          <span 
-            key={i} 
+        {particleConfigs.map((config, index) => (
+          <span
+            key={`particle-${index}`}
             className={styles.particle}
             style={{
-              top: `${Math.random() * 100}%`,
-              left: `${Math.random() * 100}%`,
-              animationDelay: `${i * 0.5}s`,
-              animationDuration: `${15 + Math.random() * 10}s`
+              top: `${config.top}%`,
+              left: `${config.left}%`,
+              animationDelay: `${config.delay}s`,
+              animationDuration: `${config.duration}s`
             }}
           />
         ))}
@@ -375,30 +404,21 @@ export default function Sleepless() {
 
       {/* Floating Code Symbols */}
       <div className={styles.floatingSymbols}>
-        {['{}', '[]', '<>', '()', '//', '==', '!=', '++'].map((symbol, i) => (
-          <span 
-            key={i} 
+        {floatingSymbolConfigs.map((config, index) => (
+          <span
+            key={`symbol-${index}`}
             className={styles.floatingSymbol}
             style={{
-              left: `${10 + i * 11}%`,
-              animationDelay: `${i * 1.5}s`,
-              animationDuration: `${20 + Math.random() * 10}s`
+              left: `${config.left}%`,
+              animationDelay: `${config.delay}s`,
+              animationDuration: `${config.duration}s`
             }}
           >
-            {symbol}
+            {config.symbol}
           </span>
         ))}
       </div>
 
-      {/* Sticky Apply Button */}
-      <div className={styles.stickyButtonContainer}>
-        <button className={`${styles.stickyApplyButton} ${styles.shimmer}`} onClick={handleApply}>
-          <span className={styles.buttonText}>Apply Now</span>
-        </button>
-        <button className={styles.stickyDetailsButton} onClick={handleViewDetails}>
-          📄 View Details
-        </button>
-      </div>
     </div>
   )
 }

@@ -8,7 +8,7 @@ const data = [
     description:
       "Presenting...Sleepless Coding Saga 3.0, the revival of a hackathon. An event designed to harness the creative talents of our students and community members to address real-world challenges. Join us on an exciting 36 hour journey to ideate, innovate and build software that impacts the world!",
     url: '/events/sleepless',
-    image_url: '/Events/pics/scs2_2024.png',
+    image_url: '/Events/pics/scs3.png',
   },
   {
     id: '13',

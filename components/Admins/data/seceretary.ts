@@ -7,7 +7,7 @@ const sec_data: admin_data = [
     email: 'gstech@iitdh.ac.in',
     linkedIn: 'https://linkedin.com/in/vansh-yadav-406336290',
     instagram: '',
-    division: 'General Secretary Technical Affairs',
+    division: 'Ex General Secretary Technical Affairs',
   },
   { 
     name: 'Nidhish Doshi',
@@ -23,7 +23,7 @@ const sec_data: admin_data = [
     email: 'codingclub@iitdh.ac.in',
     linkedIn: 'https://linkedin.com/in/amogh-r-i2t',
     instagram: '',
-    division: 'Coding Club Secretary',
+    division: 'Ex Coding Club Secretary',
   },
 ]
 
