@@ -380,7 +380,7 @@ export default function Sleepless() {
             Don't miss out on the most exciting hackathon of the year. Register now and be part of something extraordinary!
           </p>
           <button className={styles.ctaButtonLarge} onClick={handleApply}>
-            Register for Code Geass 3.0
+            Register for Sleepless Coding Saga 3.0
             <span className={styles.arrow}>→</span>
           </button>
         </div>
