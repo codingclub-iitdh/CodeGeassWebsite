@@ -35,16 +35,16 @@ const web_team: admin_data = [
 const all_admins: admin_data = [
   // CP Wing Admins
   {
-    name: 'Sarth Rajain',
-    img: '/adms/sarth.jpg',
+    name: 'Utkarsh Raj',
+    img: '/adms/xyz.jpg',
     email: '',
     linkedIn: '',
     instagram: '',
     division: 'Competitive Programming Wing Admin',
   },
   {
-    name: 'Karthik Hegde',
-    img: '/adms/karthikh.jpg',
+    name: 'Dileepan S K',
+    img: '/adms/xyz.jpg',
     email: '',
     linkedIn: '',
     instagram: '',
@@ -79,8 +79,8 @@ const all_admins: admin_data = [
     division: 'Game Development Wing Admin',
   },
   {
-    name: 'Ahamed Noor',
-    img: '/adms/ahamed.jpg',
+    name: 'Prachet Vikas Rane',
+    img: '/adms/xyz.jpg',
     email: '',
     linkedIn: '',
     instagram: '',
@@ -89,10 +89,10 @@ const all_admins: admin_data = [
   
   // FOSS Wing Admins
   {
-    name: 'Parikshit Gehlaut',
-    img: '/adms/parikshit.jpg',
-    email: '',
-    linkedIn: '',
+    name: 'Gurram Vedamitra Goud',
+    img: '/adms/vedamitra.jpg',
+    email: 'ee23bt060@iitdh.ac.in',
+    linkedIn: 'https://www.linkedin.com/in/vedamitra-gurram-214450289?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app',
     instagram: '',
     division: 'FOSS Wing Admin',
   },

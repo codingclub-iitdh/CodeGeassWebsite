@@ -2,12 +2,12 @@ import { admin_data } from '@/types/Admins/admins.types'
 
 const sec_data: admin_data = [
   {
-    name: 'Vansh Yadav',
-    img: '/adms/vansh.jpg',
-    email: 'gstech@iitdh.ac.in',
-    linkedIn: 'https://linkedin.com/in/vansh-yadav-406336290',
+    name: 'Trisham Bepari',
+    img: '/adms/trisham.jpg',
+    email: 'cs24bt022@iitdh.ac.in',
+    linkedIn: '',
     instagram: '',
-    division: 'Ex General Secretary Technical Affairs',
+    division: 'Deputy Coding Club Secretary',
   },
   { 
     name: 'Nidhish Doshi',

@@ -51,23 +51,7 @@ export default function Sleepless() {
     setIsVisible(true)
     setTimeout(() => setBadgeAnimated(true), 500)
     
-    const targetDate = new Date('2025-10-25T09:00:00').getTime()
-
-    const interval = setInterval(() => {
-      const now = new Date().getTime()
-      const difference = targetDate - now
-
-      if (difference > 0) {
-        setTimeLeft({
-          days: Math.floor(difference / (1000 * 60 * 60 * 24)),
-          hours: Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)),
-          minutes: Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60)),
-          seconds: Math.floor((difference % (1000 * 60)) / 1000)
-        })
-      }
-    }, 1000)
-
-    return () => clearInterval(interval)
+    // Remove countdown functionality since event is over
   }, [])
 
   useEffect(() => {
@@ -160,9 +144,9 @@ export default function Sleepless() {
             </div>
           </div>
           <div className={styles.buttonGroup}>
-            <button className={styles.ctaButton} onClick={handleApply}>
-              Register Now
-              <span className={styles.arrow}>→</span>
+            <button className={styles.ctaButton} onClick={handleApply} disabled style={{ opacity: 0.6, cursor: 'not-allowed' }}>
+              Registration Closed
+              <span className={styles.arrow}>✓</span>
             </button>
             <button className={styles.viewDetailsButton} onClick={handleViewDetails}>
               📄 View Details
@@ -170,28 +154,10 @@ export default function Sleepless() {
           </div>
         </div>
 
-        {/* Countdown Timer */}
-        <div className={`${styles.countdown} ${isVisible ? styles.fadeInUp : ''}`} style={{ animationDelay: '0.6s' }}>
-          <h3 className={styles.countdownTitle}>Event Starts In</h3>
-          <div className={styles.timerGrid}>
-            <div className={`${styles.timerBox} ${styles.flipIn}`} style={{ animationDelay: '0.8s' }}>
-              <span className={`${styles.timerNumber} ${styles.numberPulse}`}>{timeLeft.days}</span>
-              <span className={styles.timerLabel}>Days</span>
-            </div>
-            <div className={`${styles.timerBox} ${styles.flipIn}`} style={{ animationDelay: '0.9s' }}>
-              <span className={`${styles.timerNumber} ${styles.numberPulse}`}>{timeLeft.hours}</span>
-              <span className={styles.timerLabel}>Hours</span>
-            </div>
-            <div className={`${styles.timerBox} ${styles.flipIn}`} style={{ animationDelay: '1.0s' }}>
-              <span className={`${styles.timerNumber} ${styles.numberPulse}`}>{timeLeft.minutes}</span>
-              <span className={styles.timerLabel}>Minutes</span>
-            </div>
-            <div className={`${styles.timerBox} ${styles.flipIn}`} style={{ animationDelay: '1.1s' }}>
-              <span className={`${styles.timerNumber} ${styles.numberPulse}`}>{timeLeft.seconds}</span>
-              <span className={styles.timerLabel}>Seconds</span>
-            </div>
-          </div>
-        </div>
+        {/* Remove Countdown Timer Section */}
+        {/* <div className={`${styles.countdown} ${isVisible ? styles.fadeInUp : ''}`} style={{ animationDelay: '0.6s' }}>
+          ...
+        </div> */}
 
         {/* Animated Code Rain Effect */}
         <div className={styles.codeRain}>
@@ -209,20 +175,19 @@ export default function Sleepless() {
           <h2 className={styles.sectionTitle}>The Challenge</h2>
           <div className={styles.aboutText}>
             <p>
-              The flagship hackathon of the Coding Club, <strong>Code Geass</strong> is back - bigger, 
+              The flagship hackathon of the Coding Club, <strong>Code Geass</strong> successfully concluded - bigger, 
               bolder, and more ingenious than ever!
             </p>
             <p>
-              This year's edition challenges participants to <strong>reimagine how technology can 
+              This year's edition challenged participants to <strong>reimagine how technology can 
               seamlessly weave into our everyday routines</strong>. From streamlining mundane tasks to 
-              crafting experiences that make life smarter, faster, and more connected - it's all about 
+              crafting experiences that make life smarter, faster, and more connected - it was all about 
               innovation that touches the ordinary and makes it extraordinary.
             </p>
             <p>
-              Over <strong>36 intense hours</strong> of creativity, logic, and caffeine, teams will 
-              collaborate to bring their boldest ideas to life. Whether you're a problem solver, a 
-              tinkerer, or a dreamer, Code Geass: The Sleepless Coding Saga invites you to push the 
-              boundaries of what's possible - one line of code at a time.
+              Over <strong>36 intense hours</strong> of creativity, logic, and caffeine, teams 
+              collaborated to bring their boldest ideas to life. Code Geass: The Sleepless Coding Saga 
+              pushed the boundaries of what's possible - one line of code at a time.
             </p>
           </div>
         </div>
@@ -313,34 +278,34 @@ export default function Sleepless() {
       {/* Timeline Section */}
       <section className={styles.timeline}>
         <div className={styles.sectionContent}>
-          <h2 className={styles.sectionTitle}>Important Dates</h2>
+          <h2 className={styles.sectionTitle}>Event Timeline</h2>
           <div className={styles.timelineList}>
             <div className={styles.timelineItem}>
-              <div className={styles.timelineDate}>Oct 20</div>
+              <div className={styles.timelineDate}>Oct 22</div>
               <div className={styles.timelineContent}>
-                <h3>Registration Closes</h3>
+                <h3>Registration Closed</h3>
                 <p>End of Day</p>
               </div>
             </div>
             <div className={styles.timelineItem}>
-              <div className={styles.timelineDate}>Oct 22</div>
+              <div className={styles.timelineDate}>Oct 23</div>
               <div className={styles.timelineContent}>
                 <h3>Shortlisted Candidates Announced</h3>
-                <p>Check your email for confirmation</p>
+                <p>Confirmation sent via email</p>
               </div>
             </div>
             <div className={styles.timelineItem}>
               <div className={styles.timelineDate}>Oct 25</div>
               <div className={styles.timelineContent}>
-                <h3>Hackathon Begins</h3>
+                <h3>Hackathon Began</h3>
                 <p>9:00 AM at IIT Dharwad Permanent Campus</p>
               </div>
             </div>
             <div className={styles.timelineItem}>
               <div className={styles.timelineDate}>Oct 26</div>
               <div className={styles.timelineContent}>
-                <h3>Submission Deadline</h3>
-                <p>9:00 PM - Presentation rounds to follow</p>
+                <h3>Event Concluded</h3>
+                <p>9:00 PM - Presentations to follow on 1st November, 2025</p>
               </div>
             </div>
           </div>
@@ -350,7 +315,7 @@ export default function Sleepless() {
       {/* Registration Info */}
       <section className={styles.registration}>
         <div className={styles.sectionContent}>
-          <h2 className={styles.sectionTitle}>How to Register</h2>
+          <h2 className={styles.sectionTitle}>Event Information</h2>
           <div className={styles.registrationInfo}>
             <div className={styles.infoCard}>
               <h3>📝 Team Size</h3>
@@ -358,7 +323,7 @@ export default function Sleepless() {
             </div>
             <div className={styles.infoCard}>
               <h3>🎓 Eligibility</h3>
-              <p>Open to students from any institute in India</p>
+              <p>Students from any institute in India</p>
             </div>
             <div className={styles.infoCard}>
               <h3>✨ Selection</h3>
@@ -375,14 +340,14 @@ export default function Sleepless() {
       {/* CTA Section */}
       <section className={styles.ctaSection}>
         <div className={styles.ctaContent}>
-          <h2 className={styles.ctaTitle}>Ready to Join the Saga?</h2>
+          <h2 className={styles.ctaTitle}>Thank You for Being Part of the Saga!</h2>
           <p className={styles.ctaText}>
-            Don't miss out on the most exciting hackathon of the year. Register now and be part of something extraordinary!
+            Sleepless Coding Saga 3.0 has successfully concluded. Thank you to all participants, mentors and Organizers for making this event extraordinary!
           </p>
-          <button className={styles.ctaButtonLarge} onClick={handleApply}>
+          {/* <button className={styles.ctaButtonLarge} onClick={handleApply}>
             Register for Sleepless Coding Saga 3.0
             <span className={styles.arrow}>→</span>
-          </button>
+          </button> */}
         </div>
       </section>
 
