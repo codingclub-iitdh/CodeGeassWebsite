@@ -19,11 +19,11 @@ const sec_data: admin_data = [
   },
   {
     name: 'Amogh R',
-    img: '/adms/amogh.jpg',
+    img: '/Member/xyz.jpg',
     email: 'codingclub@iitdh.ac.in',
     linkedIn: 'https://linkedin.com/in/amogh-r-i2t',
     instagram: '',
-    division: 'Ex Coding Club Secretary',
+    division: 'Former Coding Club Secretary',
   },
 ]
 
