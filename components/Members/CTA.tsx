@@ -238,21 +238,24 @@ const CTA = () => {
                     experience:
                     <ul>
                       <li>
-                        {' '}
-                        <span className='font-semibold'>- 2024 batch: </span>
-                        HTML/CSS/JS{' '}
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+                        <span className="font-semibold">
+                          - 1st year students:
+                        </span>&nbsp;HTML/CSS/JS
                       </li>
                       <li>
-                        {' '}
-                        <span className='font-semibold'>- 2023 batch: </span>
-                        ReactJS or equivalent frameworks{' '}
-                      </li>
-                      <li>
-                        {' '}
-                        <span className='font-semibold'>
-                          - M.Tech, 2022 and 2021 batches:{' '}
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+                        <span className="font-semibold">
+                          - 2nd year students:
                         </span>
-                        Knowledge of Full Stack devlopment{' '}
+                        &nbsp;ReactJS or equivalent frameworks
+                      </li>
+                      <li>
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+                        <span className="font-semibold">
+                          - Postgrads, 3rd years and above:
+                        </span>
+                        &nbsp;Knowledge of Full Stack development
                       </li>
                     </ul>
                   </li>
@@ -278,6 +281,90 @@ const CTA = () => {
                     (can be Club Projects), providing regular updates regarding
                     its status to the club heads.
                   </li>
+                </ul>
+
+                <li>Computer Systems Wing (new!) </li>
+
+                <ul className="pl-5 mt-1 space-y-1 list-disc list-inside font-light text-base sm:text-xl text-gray-300 tracking-normal">
+                  <p>
+                    The Computer Systems wing deals with the broad areas of Computer 
+                    Architecture, Embedded Software, Operating Systems, Compilers, 
+                    Cybersecurity, Networking and Cloud Computing.
+                  </p>
+                  <p>
+                    The Systems Wing, just like the FOSS Wing has very little barrier
+                    to get into. All you need is an interest in any of the above 
+                    (or related) domains.
+
+                    We will gauge your interest and willingness to work for the club
+                    in these domains via short discussions/interviews.
+
+                    Once you join the wing, participation in yearly 
+                    competitions/projects is expected.
+                  </p>
+                  <p>
+                    If you are new to computer systems and looking to learn, you can 
+                    participate in the weekly discussions and present on topics that
+                    you are interested in (presentation is a useful skill!).
+                  </p>
+                  <p>
+                    Here are a few things you can explore if you are interested in
+                    participating:
+                  </p>
+                  <div>
+                    <li>
+                      <span className="font-semibold">
+                        Cyber and Embedded Security:
+                      </span>&nbsp;
+                      CTF providers (e.g. HackTheBox, TryHackMe, PicoCTF) &amp; 
+                      yearly competitions (e.g. MITRE eCTF, CSAW)
+                    </li>
+                    <li>
+                      <span className="font-semibold">
+                        Cloud Computing:
+                      </span>&nbsp;
+                      Kubernetes, Docker, AWS/GCP/Azure
+                    </li>
+                    <li>
+                      <span className="font-semibold">
+                        Operating Systems:
+                      </span>&nbsp;
+                      Linux Device Driver Development (e.g. the ldd3 book), eBPF
+                    </li>
+                    <li>
+                      <span className="font-semibold">
+                        Computer Networks:
+                      </span>&nbsp;
+                      Access Point Firmware (e.g. OpenWRT), 
+                      eBPF, Cryptography and Network Security,
+                      Software Defined Networking (Algorithms &amp; Optimization, 
+                      Graph Theory)
+                    </li>
+                    <li>
+                      <span className="font-semibold">
+                        Computer Architecture:
+                      </span>&nbsp;
+                      Simulations and Courses (e.g. From NAND to Tetris),
+                      FPGA Programming, Embedded System Design and RTOS
+                    </li>
+                    <li>
+                      <span className="font-semibold">
+                        Compilers:
+                      </span>&nbsp;
+                      Formal Verification, LLVM,
+                      Academic Conferences and Summer/Winter Schools
+                      (e.g. ACM Winter School, IISc Summer Schools), 
+                    </li>
+                    <li>
+                      Keep in mind that this is not an exhaustive list of things 
+                      you need to look into. Computer Systems is a vast collection
+                      of large areas and you can choose what you want to work in. 
+                      
+                      Many of these might look very "textbook"-ish (academic) 
+                      but they are important in industry and make for cool 
+                      projects as well!
+                    </li>
+                  </div>
                 </ul>
               </ol>
             </div>
