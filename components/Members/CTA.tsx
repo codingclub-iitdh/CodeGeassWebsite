@@ -31,7 +31,14 @@ const CTA = () => {
                   <p>
                     The FOSS Wing, true to the nature of Free and Open Source
                     Software, is a wing with very little restrictions on
-                    participation. The procedure for applying for membership in
+                    participation. The FOSS Wing focuses on fostering a 
+                    collaborative environment where individuals passionate 
+                    about open-source software can thrive. Members engage in 
+                    projects that promote community-driven development.
+                  </p>
+                  <br/>
+                  <p>
+                    The procedure for applying for membership in
                     the Coding Club's FOSS Wing is as follows:
                   </p>
                   <li>
@@ -82,6 +89,14 @@ const CTA = () => {
                 <li>Competitive Programming</li>
 
                 <ul className='pl-5 mt-1 space-y-1 list-disc list-inside font-light text-base sm:text-xl text-gray-300 tracking-normal'>
+                  <p>
+                    The Competitive Programming Wing is a dynamic community for 
+                    those eager to excel in algorithmic challenges and coding 
+                    competitions. With a strong focus on preparing for prestigious 
+                    contests like the ICPC, members engage in rigorous practice 
+                    sessions and discussions to sharpen their noggins.
+                  </p>
+                  <br/>
                   <p>
                     At present, our membership application process exclusively
                     acknowledges Codeforces and LeetCode as the recognized
@@ -167,6 +182,14 @@ const CTA = () => {
 
                 <ul className='pl-5 mt-1 space-y-1 list-disc list-inside font-light text-base sm:text-xl text-gray-300 tracking-normal'>
                   <p>
+                    The Game Development Wing is dedicated to bringing 
+                    together creative minds passionate about interactive 
+                    entertainment. Through hands-on experience, 
+                    participants enhance their skills in game design, 
+                    programming, and project management.
+                  </p>
+                  <br/>
+                  <p>
                     The requirements for joining the Game Development wing are
                     as follows{' '}
                   </p>
@@ -211,6 +234,14 @@ const CTA = () => {
                 <li>Web Development Wing</li>
 
                 <ul className='pl-5 mt-1 space-y-1 list-disc list-inside font-light text-base sm:text-xl text-gray-300 tracking-normal'>
+                  <p>
+                    The Web Development Wing aims to cultivate a community of 
+                    aspiring web developers and designers. From designing 
+                    user interfaces to developing robust web applications, 
+                    the Web Development Wing fosters an engaging learning 
+                    environment for all its members.
+                  </p>
+                  <br/>
                   <p>
                     The requirements for joining the Web Development wing are as
                     follows{' '}
@@ -291,6 +322,7 @@ const CTA = () => {
                     Architecture, Embedded Software, Operating Systems, Compilers, 
                     Cybersecurity, Networking and Cloud Computing.
                   </p>
+                  <br/>
                   <p>
                     The Systems Wing, just like the FOSS Wing has very little barrier
                     to get into. All you need is an interest in any of the above 
@@ -302,11 +334,13 @@ const CTA = () => {
                     Once you join the wing, participation in yearly 
                     competitions/projects is expected.
                   </p>
+                  <br/>
                   <p>
                     If you are new to computer systems and looking to learn, you can 
                     participate in the weekly discussions and present on topics that
                     you are interested in (presentation is a useful skill!).
                   </p>
+                  <br/>
                   <p>
                     Here are a few things you can explore if you are interested in
                     participating:
@@ -355,7 +389,8 @@ const CTA = () => {
                       Academic Conferences and Summer/Winter Schools
                       (e.g. ACM Winter School, IISc Summer Schools), 
                     </li>
-                    <li>
+                    <br/>
+                    <p>
                       Keep in mind that this is not an exhaustive list of things 
                       you need to look into. Computer Systems is a vast collection
                       of large areas and you can choose what you want to work in. 
@@ -363,7 +398,7 @@ const CTA = () => {
                       Many of these might look very "textbook"-ish (academic) 
                       but they are important in industry and make for cool 
                       projects as well!
-                    </li>
+                    </p>
                   </div>
                 </ul>
               </ol>
