@@ -1,130 +1,103 @@
-import { CodeForcesAPI } from 'codeforces-api-ts'
-import { NextApiRequest, NextApiResponse } from 'next'
-import validator from 'validator'
+import { NextApiRequest, NextApiResponse } from 'next';
+import { CodeForcesAPI } from 'codeforces-api-ts';
+import { prisma } from '@/prisma/client';
+import { Validator } from '@/types/Validator/validator.types';
+import { rateLimit } from '@/app/utils/rate-limit';
+import { CodeforcesSubmissionData, CodeforcesUserResponse } from '@/types/Members/ld-cd';
 
-import { prisma } from '@/prisma/client'
+const limiter = rateLimit({
+  interval: 60 * 1000,
+  uniqueTokenPerInterval: 500
+});
 
-const handler = async (req: NextApiRequest, res: NextApiResponse) => {
-  if (req.method === 'POST') {
-    const { fullName, rollNumber, userHandle } = req.body
-
-    if (String(rollNumber)[0] !== '2') {
-      return res.status(400).json({
-        errorMessage: 'Enter a valid RollNumber',
-      })
-    }
-
-    const errors: string[] = []
-
-    const validtionSchema = [
-      {
-        valid: validator.isLength(rollNumber, {
-          min: 9,
-          max: 9,
-        }),
-        errorMessage: 'Invalid Length for Roll Number',
-      },
-    ]
-
-    validtionSchema.forEach(check => {
-      if (!check.valid) {
-        errors.push(check.errorMessage)
-      }
-    })
-
-    if (errors.length > 0) {
-      return res.status(400).json({
-        errorMessage: errors.join(';'),
-      })
-    }
-
-    const email_id: String = `${rollNumber}@iitdh.ac.in`
-
-    try {
-      const userWithRollNumber = await prisma.codeforcesLeaderBoard.findUnique({
-        where: { rollNumber: String(rollNumber) },
-      })
-      if (userWithRollNumber) {
-        return res.status(400).json({
-          errorMessage:
-            'This roll number is already present on the leaderboard',
-        })
-      }
-    } catch (err) {
-      console.error(err)
-      return res.status(400).json({
-        errorMessage:
-          'Our database is offline, Please try again after sometime or mail to oss@iitdh.ac.in if the issue persists',
-      })
-    }
-
-    try {
-      const userWithUserHandle = await prisma.codeforcesLeaderBoard.findUnique({
-        where: { userHandle: userHandle },
-      })
-      if (userWithUserHandle) {
-        return res.status(400).json({
-          errorMessage:
-            'User with this username already present on the leaderboard',
-        })
-      }
-    } catch (err) {
-      console.log(err)
-      return res.status(400).json({
-        errorMessage:
-          'Our database is offline, Please try again after sometime or mail to oss@iitdh.ac.in if the issue persists',
-      })
-    }
-
-    let num_contest = 0
-    let last_contest = 0
-    let rating = 0
-
-    try {
-      const userData = await CodeForcesAPI.user.rating({ handle: userHandle })
-      num_contest = userData.result.length
-      last_contest = userData.result[num_contest - 1].contestId
-      rating = userData.result[num_contest - 1].newRating
-    } catch (err) {
-      res.status(400).json({
-        errorMessage:
-          'We are experiencing some issues with Codeforces server, please try after some time',
-      })
-    }
-
-    if (num_contest === 0) {
-      return res.status(400).json({
-        errorMessage: 'Number of contests given are nill',
-      })
-    }
-
-    try {
-      const coder = await prisma.codeforcesLeaderBoard.create({
-        data: {
-          name: fullName,
-          rollNumber: String(rollNumber),
-          rating: Number(rating),
-          last_contest_id: Number(last_contest),
-          contests: Number(num_contest),
-          userHandle: userHandle,
-        },
-      })
-    } catch (err) {
-      return res.status(400).json({
-        errorMessage:
-          'Our database is offline, Please try again after sometime or mail to oss@iitdh.ac.in if the issue persists',
-      })
-    }
-
-    return res.status(200).json({
-      message: 'Succefully got the request',
-      num_contest: num_contest,
-      last_contest_ID: last_contest,
-      rating: rating,
-    })
+export default async function handler(
+  req: NextApiRequest,
+  res: NextApiResponse
+) {
+  if (req.method !== 'POST') {
+    return res.status(405).json({ error: 'Method not allowed' });
   }
 
-  return res.status(404).json('Unknown endpoint')
+  try {
+    await limiter.check(res, 10, 'CACHE_TOKEN');
+  } catch {
+    return res.status(429).json({ error: 'Rate limit exceeded' });
+  }
+
+  const submissionData: CodeforcesSubmissionData = req.body;
+
+  // Validate input
+  const validation = Validator.validateSubmission(submissionData);
+  if (!validation.isValid) {
+    return res.status(400).json({
+      error: validation.errors.join('; ')
+    });
+  }
+
+  try {
+    // Check for existing roll number
+    const existingRollNumber = await prisma.codeforcesLeaderBoard.findUnique({
+      where: { rollNumber: submissionData.rollNumber }
+    });
+
+    if (existingRollNumber) {
+      return res.status(400).json({
+        error: 'This roll number is already present on the leaderboard'
+      });
+    }
+
+    // Check for existing handle
+    const existingHandle = await prisma.codeforcesLeaderBoard.findUnique({
+      where: { userHandle: submissionData.userHandle }
+    });
+
+    if (existingHandle) {
+      return res.status(400).json({
+        error: 'User with this username already present on the leaderboard'
+      });
+    }
+
+    // Fetch Codeforces user data
+    const userData: CodeforcesUserResponse = await CodeForcesAPI.user.rating({
+      handle: submissionData.userHandle
+    });
+
+    if (!userData.result || userData.result.length === 0) {
+      return res.status(400).json({
+        error: 'User has not participated in any contests'
+      });
+    }
+
+    const numContests = userData.result.length;
+    const lastContest = userData.result[numContests - 1].contestId;
+    const rating = userData.result[numContests - 1].newRating;
+
+    // Create new entry
+    const newUser = await prisma.codeforcesLeaderBoard.create({
+      data: {
+        name: submissionData.fullName,
+        rollNumber: submissionData.rollNumber,
+        userHandle: submissionData.userHandle,
+        rating,
+        contests: numContests,
+        last_contest_id: lastContest
+      }
+    });
+
+    return res.status(200).json({
+      message: 'Successfully added to leaderboard',
+      data: {
+        rating,
+        contests: numContests,
+        lastContestId: lastContest
+      }
+    });
+  } catch (error) {
+    console.error('Codeforces submission error:', error);
+    return res.status(500).json({
+      error: 'Server error, please try again later'
+    });
+  }
 }
 
-export default handler
+// utils/rate-limit.ts
