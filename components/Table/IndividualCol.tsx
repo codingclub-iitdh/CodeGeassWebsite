@@ -51,9 +51,6 @@ const IndividualCol = ({
             </td>
           )
         }
-        if (index === 3 && userType !== 'admin') {
-          return null // Skip rendering the 4th column if not admin
-        }
         return (
           <td className='px-6 py-4 md:px-10' key={index}>
             {item}
